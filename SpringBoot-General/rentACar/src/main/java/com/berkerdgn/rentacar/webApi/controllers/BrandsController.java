@@ -1,11 +1,10 @@
 package com.berkerdgn.rentacar.webApi.controllers;
 
 import com.berkerdgn.rentacar.business.abstracts.BrandService;
-import com.berkerdgn.rentacar.entities.concretes.Brand;
+import com.berkerdgn.rentacar.business.requests.CreateBrandRequest;
+import com.berkerdgn.rentacar.business.responses.GetAllBrandsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,9 +23,14 @@ public class BrandsController {
 
 
     @GetMapping("/getAll")
-    public List<Brand> getAll(){
+    public List<GetAllBrandsResponse> getAll(){
         //Ioc
         return brandService.getAll();
+    }
+
+    @PostMapping("/add")
+    public void add(@RequestBody() CreateBrandRequest createBrandRequest) {
+        this.brandService.add(createBrandRequest);
     }
 
 
