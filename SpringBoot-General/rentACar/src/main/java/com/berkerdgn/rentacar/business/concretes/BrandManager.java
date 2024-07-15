@@ -5,6 +5,7 @@ import com.berkerdgn.rentacar.business.requests.CreateBrandRequest;
 import com.berkerdgn.rentacar.business.requests.UpdateBrandRequest;
 import com.berkerdgn.rentacar.business.responses.GetAllBrandsResponse;
 import com.berkerdgn.rentacar.business.responses.GetByIdBrandResponse;
+import com.berkerdgn.rentacar.business.rules.BrandBusinessRule;
 import com.berkerdgn.rentacar.core.utilities.mappers.ModelMapperService;
 import com.berkerdgn.rentacar.dataAccess.abstracts.BrandRepository;
 import com.berkerdgn.rentacar.entities.concretes.Brand;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class BrandManager implements BrandService {
     private BrandRepository brandRepository;
     private ModelMapperService modelMapperService;
+    private BrandBusinessRule brandBusinessRule;
 
     @Override
     public List<GetAllBrandsResponse> getAll() {
@@ -56,6 +58,7 @@ public class BrandManager implements BrandService {
 
         // Brand brand = new Brand();
         // brand.setName(createBrandRequest.getName());
+        this.brandBusinessRule.checkIfBrandNameExists(createBrandRequest.getName());
 
         Brand brand = this.modelMapperService.forRequest().map(createBrandRequest,Brand.class);
 

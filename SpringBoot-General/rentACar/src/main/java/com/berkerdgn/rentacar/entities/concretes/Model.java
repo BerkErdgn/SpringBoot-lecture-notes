@@ -1,4 +1,5 @@
 package com.berkerdgn.rentacar.entities.concretes;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,13 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
-@Table(name="brands")
+@Table(name="models")
 @Data  // Getter ve setterları otomatik oluşturması için
 @AllArgsConstructor  //Parametreli kullanamk için
 @NoArgsConstructor   //PArametresiz kullanmak için
 @Entity
-public class Brand {
+public class Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,11 @@ public class Brand {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "brand")
-    List<Model> models;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @OneToMany(mappedBy = "model_id")
+    private List<Car> cars;
 
 }
